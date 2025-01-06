@@ -31,7 +31,8 @@ export async function loginByPassword(username, password) {
 
   try {
     const res = await axios.post(
-      `https://api-user.huami.com/registrations/+86${username}/tokens`,
+      // `https://api-user.huami.com/registrations/+86${username}/tokens`,
+      `https://api-user.huami.com/registrations/${username}/tokens`,
       data
     );
     log.info("登录成功, 开始获取登录授权码");
@@ -81,15 +82,45 @@ export async function loginByPassword(username, password) {
  * @returns
  */
 export async function getAccessToken(code) {
+  // const data = toUrlEncode({
+  //   app_name: "com.xiaomi.hm.health",
+  //   app_version: "4.6.0",
+  //   code: code,
+  //   country_code: "CN",
+  //   device_id: "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
+  //   device_model: "phone",
+  //   grant_type: "access_token",
+  //   third_name: "huami_phone",
+  // });
+
+  /*
+  "allow_registration": "false",
+  "app_name": "com.xiaomi.hm.health",
+  "app_version": "6.3.5",
+  "code": f"{code}",
+  "country_code": "CN",
+  "device_id": "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
+  "device_model": "phone",
+  "dn": "api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com",
+  "grant_type": "access_token",
+  "lang": "zh_CN",
+  "os_version": "1.5.0",
+  "source": "com.xiaomi.hm.health",
+  "third_name": "email",
+  */
   const data = toUrlEncode({
     app_name: "com.xiaomi.hm.health",
-    app_version: "4.6.0",
+    app_version: "6.3.5",
     code: code,
     country_code: "CN",
     device_id: "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
     device_model: "phone",
+    dn: "api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com",
     grant_type: "access_token",
-    third_name: "huami_phone",
+    lang: "zh_CN",
+    os_version: "1.5.0",
+    source: "com.xiaomi.hm.health",
+    third_name: "email",
   });
 
   try {
